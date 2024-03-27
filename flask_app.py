@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from werkzeug.security import check_password_hash
+from .models import User  # Import User model from .models module
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/quiz_app_db'  # Update with your MySQL credentials and database name
+app.config['SECRET_KEY'] = '123456'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SASbubakar2004@localhost/quiz_app_db'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -14,27 +16,17 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
-# User model for SQLAlchemy
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True, nullable=False)
-    password_hash = db.Column(db.String(100), nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.username}>'
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# Mock user authentication (replace with actual database query)
+# Query the user from the database
 def authenticate(username, password):
     user = User.query.filter_by(username=username).first()
-    if user and user.password_hash == password:
-        return user
-    return None
+    if user and check_password_hash(user.password_hash, password):
+        return user  # if succeeds
+    return None  # if fails
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -60,11 +52,11 @@ def logout():
     return redirect(url_for('login'))
 
 
-# Your quiz route with login_required decorator
+# The quiz route with login_required decorator
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def quiz():
-    # Your existing quiz logic here
+    # Existing quiz logic 
     return render_template('quiz.html')
 
 
