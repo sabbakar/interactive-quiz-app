@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required
 from werkzeug.security import check_password_hash
-from models import db, User  # Import db and User model from models module
+from models import db, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456'
@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Initialize Flask-Login
-login_manager = LoginManager()
+login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 @login_manager.user_loader
@@ -22,9 +22,9 @@ def load_user(user_id):
 
 # Query the user from the database
 def authenticate(username, password):
-    users = User.query.filter_by(username=username).first()
-    if users and check_password_hash(users.password_hash, password):
-        return users  # if succeeds
+    user = User.query.filter_by(username=username).first()
+    if user and check_password_hash(user.password_hash, password):
+        return user  # if succeeds
     return None  # if fails
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -57,3 +57,4 @@ def quiz():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
