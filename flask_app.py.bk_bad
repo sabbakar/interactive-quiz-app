@@ -6,7 +6,7 @@ from models import db, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SASbubakar2004@localhost/quiz_app_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SASbubakar2004@localhost/quiz_app_db'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -23,33 +23,6 @@ def authenticate(username, password):
     if user and user.password_hash == password:
         return user  # Successful authentication
     return None  # Invalid credentials
-
-def fetch_current_question():
-    questions = [
-        {
-            'question_text': 'What is the capital of France?',
-            'answers': ['Paris', 'London', 'Berlin', 'Madrid'],
-            'correct_answer': 'Paris',
-        },
-        {
-            'question_text': 'Who wrote "Romeo and Juliet"?',
-            'answers': ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'Leo Tolstoy'],
-            'correct_answer': 'William Shakespeare',
-        },
-        
-    ]
-
-    if 'current_question_index' not in session:
-        session['current_question_index'] = 0
-
-    current_question_index = session['current_question_index']
-    current_question = questions[current_question_index]
-
-    session['current_question_index'] += 1
-    if session['current_question_index'] >= len(questions):
-        session['current_question_index'] = 0
-
-    return current_question
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -75,20 +48,9 @@ def logout():
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def quiz():
-    if request.method == 'POST':
-        user_answer = request.form['answer']
-        current_question = fetch_current_question()
-
-        if user_answer == current_question['correct_answer']:
-            feedback = 'Correct answer!'
-        else:
-            feedback = 'Wrong answer. Try again.'
-
-        return render_template('quiz.html', current_question=current_question, feedback=feedback)
-
-    current_question = fetch_current_question()
+    # Logic for fetching and displaying quiz questions
+    current_question = fetch_current_question()  # Fetch the current question 
     return render_template('quiz.html', current_question=current_question)
 
 if __name__ == '__main__':
     app.run(debug=True)
-

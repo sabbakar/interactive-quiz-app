@@ -36,7 +36,7 @@ def fetch_current_question():
             'answers': ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'Leo Tolstoy'],
             'correct_answer': 'William Shakespeare',
         },
-        
+        # Add more questions as needed
     ]
 
     if 'current_question_index' not in session:
