@@ -9,10 +9,8 @@ app.config['SECRET_KEY'] = '123456'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SASbubakar2004@localhost/quiz_app_db'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize SQLAlchemy with the Flask app
 db.init_app(app)
 
-# Initialize Flask-Login
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
@@ -20,12 +18,11 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Query the user from the database
 def authenticate(username, password):
     user = User.query.filter_by(username=username).first()
-    if user and check_password_hash(user.password_hash, password):
-        return user  # if succeeds
-    return None  # if fails
+    if user and user.password_hash== password:
+        return user  # Successful authentication
+    return None  # Invalid credentials
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -48,13 +45,11 @@ def logout():
     session.pop('user_id', None)
     return redirect(url_for('login'))
 
-# The quiz route with login_required decorator
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def quiz():
-    # Existing quiz logic 
-    return render_template('quiz.html')
+     current_question = fetch_current_question()  # Fetch the current question 
+     return render_template('quiz.html', current_question=current_question)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
