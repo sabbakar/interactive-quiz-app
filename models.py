@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     is_active = db.Column(db.Boolean, default=True)  # Example attribute for user activation status
+    score = db.Column(db.Integer, default=0)  # New column for storing user's score
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

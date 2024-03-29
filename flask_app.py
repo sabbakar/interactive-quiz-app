@@ -100,8 +100,14 @@ def quiz():
 @login_required
 def quiz_completed():
     user_score = session.get('user_score', 0)  # Get the total score from the session
+    current_user = User.query.get(session['user_id'])  # Get the current user from the database
+
+    # Update the user's score in the database
+    if current_user:
+        current_user.score += user_score
+        db.session.commit()
+
     session.pop('user_score', None)  # Reset user's score after completing the quiz
     return render_template('quiz_completed.html', user_score=user_score)
-
 if __name__ == '__main__':
     app.run(debug=True)
