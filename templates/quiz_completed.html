@@ -4,9 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Completed</title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; /* Button color */
+            color: #fff; /* Text color */
+            text-decoration: none; /* Remove underline */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Show pointer on hover */
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Darker color on hover */
+        }
+    </style>
 </head>
 <body>
     <h1>Quiz Completed</h1>
-    <p>Your total score is: {{ user_score }}</p>
+    <p>Your final score is: {{ user_score }}</p>
+    <a href="{{ url_for('quiz') }}" class="button">Go Again</a>
 </body>
 </html>
+

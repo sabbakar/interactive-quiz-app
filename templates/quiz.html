@@ -4,21 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='images/background_image1.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Set the height of the background to the viewport height */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            font-family: Arial, sans-serif; 
+        }
+	#question {
+            font-size: 24px; /* Adjust the font size as needed */
+        	font-weight: bold;
+}
+        h1 {
+            font-size: 36px; /* Adjust the font size as needed */
+        }
+    </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-    <h1>Quiz Application</h1>
+    <h1>Brain Busters</h1>
     <div id="question">{{ current_question.question_text }}</div>
     <form id="quiz-form" method="POST">
         {% for answer in current_question.answers %}
         <input type="radio" name="answer" value="{{ answer }}"> {{ answer }}<br>
         {% endfor %}
         <button type="submit">Submit Answer</button>
+        <h5><b>Note: if you submit an empty answer, you can't move to the next question. And therefore your quiz is terminated.</b></h5>
     </form>
     <div id="feedback">{{ feedback }}</div>
     <div id="score">Score: {{ user_score }}</div>
     <div id="timer">Time Left: {{ time_left }} seconds</div>
-    <form id="logout-form" action="{{ url_for('logout') }}" method="POST">
+    <form id="logout-form" action="{{ url_for('logout') }}" method="GET">
         <button type="submit">Logout</button>
     </form>
     <script>

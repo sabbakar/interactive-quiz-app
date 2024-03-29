@@ -100,6 +100,7 @@ def quiz():
 @login_required
 def quiz_completed():
     user_score = session.get('user_score', 0)  # Get the total score from the session
+    session.pop('user_score', None)  # Reset user's score after completing the quiz
     return render_template('quiz_completed.html', user_score=user_score)
 
 if __name__ == '__main__':
