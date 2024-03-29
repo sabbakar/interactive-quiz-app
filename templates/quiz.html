@@ -9,7 +9,7 @@
 <body>
     <h1>Quiz Application</h1>
     <div id="question">{{ current_question.question_text }}</div>
-    <form method="POST">
+    <form id="quiz-form" method="POST">
         {% for answer in current_question.answers %}
         <input type="radio" name="answer" value="{{ answer }}"> {{ answer }}<br>
         {% endfor %}
@@ -18,25 +18,26 @@
     <div id="feedback">{{ feedback }}</div>
     <div id="score">Score: {{ user_score }}</div>
     <div id="timer">Time Left: {{ time_left }} seconds</div>
-
+    <form id="logout-form" action="{{ url_for('logout') }}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
     <script>
-        // Countdown timer logic
-        var timerElement = document.getElementById('timer');
-        var timeLeft = {{ time_left }};
+        var timerElement = document.getElementById('timer'); // Update to match your new timer element ID
+        var timeLeft = {{ 50 }};
         
         function updateTimer() {
             if (timeLeft > 0) {
-                timeLeft--;
                 timerElement.textContent = 'Time Left: ' + timeLeft + ' seconds';
+                timeLeft--;
             } else {
                 clearInterval(timerInterval);
                 timerElement.textContent = 'Time\'s up!';
                 // Add logic for handling time's up event (e.g., end quiz)
+                document.getElementById('quiz-form').submit(); // Submit the quiz form when time's up
             }
         }
 
-        var timerInterval = setInterval(updateTimer, 1000);
+        var timerInterval = setInterval(updateTimer, 1000); // Update timer every second
     </script>
 </body>
 </html>
-
