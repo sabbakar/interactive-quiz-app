@@ -13,9 +13,17 @@ A simple interactive quiz web application built using Flask, MySQL, and Flask-Lo
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/sabbakar/interactive-quiz-app.git
+   cd interactive-quiz-app
+   ```
+2.  **Configure the App**:
+   - Edit `flask_app.py` to update MySQL username/password.
+
+3.  **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
    ```
 
-2. **Set up MySQL Database**:
+4.  **Set up MySQL Database**:
    - Install MySQL.
    - Create a database `quiz_app_db`.
    - Run:
@@ -23,24 +31,16 @@ A simple interactive quiz web application built using Flask, MySQL, and Flask-Lo
      python3 tables.py
      ```
 
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure the App**:
-   - Edit `flask_app.py` to update MySQL username/password.
-
 5. **Run the App**:
    ```bash
-   python flask_app.py
+   python3 flask_app.py
    ```
 
    Visit `http://localhost:5000/`.
 
 ## Usage
 
-- Login (add user and password first directly in DB).
+- Login (add desired username and password first directly in DB).
 - Take quiz.
 - View score.
 - Logout.
@@ -70,3 +70,10 @@ interactive-quiz-app
 - Better admin panel.
 - Leaderboard.
 - Email notifications.
+
+## Contact Me
+
+Feel free to reach out if you have any questions, suggestions, or feedback.
+
+- Email: sadeeqsas14@gmail.com
+- Twitter: @sadiq__abubakar
