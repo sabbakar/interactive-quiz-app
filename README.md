@@ -76,4 +76,4 @@ interactive-quiz-app
 Feel free to reach out if you have any questions, suggestions, or feedback.
 
 - Email: sadeeqsas14@gmail.com
-- [Twitter](twitter.com/sadiq__abubakar)
+- [Twitter](https://twitter.com/sadiq__abubakar)
