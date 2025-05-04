@@ -6,7 +6,8 @@ from models import db, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://[your mysql account name]:[your mysql account password]@localhost/quiz_app_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://[your mysql account name]:[your mysql account password]@localhost/quiz_app_db' 
+# or app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://[your mysql account name]:[your mysql account password]@127.0.0.1/quiz_app_db' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
